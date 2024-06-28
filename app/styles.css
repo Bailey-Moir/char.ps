@@ -1,25 +1,25 @@
 html, body{
-  margin: 0;
-  height: 100%;
-  background-color: black;
+    margin: 0;
+    height: 100%;
+    background-color: black;
 }
 
 body, #main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 #container {
-  --shadow-size: 15px;
-  --padding-size: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--shadow-size);
-  box-shadow: inset 0 0 calc(var(--shadow-size) - var(--padding-size)) calc(var(--shadow-size) - var(--padding-size)) black;
-  background: conic-gradient(
+    --shadow-size: 15px;
+    --padding-size: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--shadow-size);
+    box-shadow: inset 0 0 calc(var(--shadow-size) - var(--padding-size)) calc(var(--shadow-size) - var(--padding-size)) black;
+    background: conic-gradient(
         rgba(255, 0, 0, 1) 0%,
         rgba(255, 154, 0, 1) 10%,
         rgba(208, 222, 33, 1) 20%,
@@ -34,17 +34,17 @@ body, #main {
     );
 }
 #icon {
-  width: 20vw;
-  height: auto;
-  border: none;
+    width: 20vw;
+    height: auto;
+    border: none;
 }
 
 #title {
-  color: white;
-  font-size: 3vw;
-  font-family: 'JetBrains Mono';
-  text-decoration: underline #2EC3E3;
-  
-  position: relative;
-  bottom: 20px;
+    color: white;
+    font-size: 3vw;
+    font-family: 'JetBrains Mono';
+    text-decoration: underline #2EC3E3;
+
+    position: relative;
+    bottom: 20px;
 }
