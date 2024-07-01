@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css?family=JetBrains Mono');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.container {
+  display: inline-flex;
+  align-items: center;
+  
+  position: relative;
+  margin-left: 40px;
+  height: 100px;
+  padding-right: 20px;
+  
+  background-color: #1A1A1A;
+  color: white;
+  text-decoration: none;
+
+  &>img {
+    width: 80px;  
+    height: 80px;
+    border-radius: 50%;
+
+    position: absolute;
+    left: -40px;
+  }
+
+  &:hover>.inner {
+    border-bottom: white solid 1px;
+    padding-top: 1px;
+  }
+  &>.inner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    margin-left: calc(40px + 10px);
+    
+    height: 1.5em;
+
+    &>i {
+      margin-left: 10px;
+      font-size: 1.5em;
+    }
+
+    &>.name {  
+      font-family: 'JetBrains Mono';
+      font-size: 1.5em;
+    }
+  }
+}
+
+
+
+
