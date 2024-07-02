@@ -5,7 +5,7 @@ import LinkBox from '../components/link-box';
 import React, { useRef, useEffect } from 'react';
 
 export default function Page() {
-    const canvasRef = useRef(null);
+    //const canvasRef = useRef(null);
 
     //useEffect(() => {
     //    if (!canvasRef.current) return;
