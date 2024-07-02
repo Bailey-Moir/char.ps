@@ -9,9 +9,15 @@ export default function LinkBox({ href, text, icon, className, white}: { href: s
             <img src={icon} />
         </div>
         <div className={styles.inner}>
-            <p className={`${styles.name} font-mono`}>
-                {text}
-            </p>
+            <div className={styles.left}>
+                <p className={`${styles.name} font-mono`}>
+                    {text}
+                </p>
+                <p className={`${styles.url} font-mono`}>{
+                    href.replace("https://","")
+                        .replace("www.","")
+                }</p>
+            </div>
             <FontAwesomeIcon icon={faExternalLink} className="fas fa-external-link"></FontAwesomeIcon>
         </div>
     </a>

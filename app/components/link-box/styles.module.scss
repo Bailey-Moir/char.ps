@@ -33,10 +33,6 @@
     }   
   }
 
-  &:hover>.inner {
-    border-bottom: white solid 1px;
-    padding-top: 1px;
-  }
   &>.inner {
     display: inline-flex;
     align-items: center;
@@ -51,13 +47,20 @@
       right: 20px;
       font-size: 1.3em;
     }
+  }
 
-    &>.name {  
-      font-size: 1.5em;
-    }
+  & .name {  
+    font-size: 1.5em;
+  }
+  &:hover .name {
+    text-decoration: underline white solid 1px;
+  }
+
+  & .url {
+    color: #505050 !important;
+    font-size: .8em;
+
+    position: relative;
+    top: -5px;
   }
 }
-
-
-
-

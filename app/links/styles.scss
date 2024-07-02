@@ -34,10 +34,16 @@ html, body {
 }
 
 .links {
+  $width: 350px;
+
   display: grid;
-  grid-template-columns: repeat(3, 250px);
+  grid-template-columns: repeat(3, $width);
   gap: 30px;
 
-  @media (max-width: 869px) { grid-template-columns: repeat(2, 250px); }
-  @media (max-width: 589px) { grid-template-columns: repeat(1, 250px); }
+  // @media (max-width: calc((2 + 1) * $width + (2 + 2) * 30px)) { grid-template-columns: repeat(2, $width); }
+  // @media (max-width: calc((1 + 1) * $width + (1 + 2) * 30px)) { grid-template-columns: repeat(1, $width); }
+  // and
+  @for $i from 2 through 1 {
+    @media (max-width: calc(($i + 1) * $width + ($i + 2) * 30px)) { grid-template-columns: repeat($i, $width); }
+  }
 }
