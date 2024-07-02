@@ -3,21 +3,17 @@ import './styles.scss';
 import React, { useRef, useEffect } from 'react';
 
 export default function Page() {
-    const canvasRef = useRef(null);
+    const canvasRef: React.Ref<any> = useRef(null);
 
     useEffect(() => {
-        try {
-            const ctx = canvasRef.current.getContext('2d');
-            // Load image
-            const image = new Image();
-            image.onload = () => {
-              // Draw the image into the canvas
-              ctx.drawImage(image, 0, 0);
-            };
-            image.src = "/arlo.png";
-        } catch (e) {
-            console.log(e);
-        }
+        const ctx = canvasRef.current.getContext('2d');
+        // Load image
+        const image = new Image();
+        image.onload = () => {
+          // Draw the image into the canvas
+          ctx.drawImage(image, 0, 0);
+        };
+        image.src = "/arlo.png";
     }, []);
 
     return <div id="main">
