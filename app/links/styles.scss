@@ -1,4 +1,5 @@
 html, body {
+  width: 100%;
   height: 100%;
   margin: 0px;
 
@@ -8,4 +9,35 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  width: 256px;
+  margin-bottom: 30px;
+
+  canvas, img {
+    width: 100%;
+    border-radius: 50%;
+
+    z-index: 1;
+  }
+
+  canvas {
+    image-rendering: pixelated;
+  }
+}
+
+.links {
+  display: grid;
+  grid-template-columns: repeat(3, 250px);
+  gap: 30px;
+
+  @media (max-width: 869px) { grid-template-columns: repeat(2, 250px); }
+  @media (max-width: 589px) { grid-template-columns: repeat(1, 250px); }
 }

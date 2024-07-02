@@ -1,8 +1,0 @@
-.links {
-  display: grid;
-  grid-template-columns: repeat(3, 250px);
-  gap: 30px;
-
-  @media (max-width: 869px) { grid-template-columns: repeat(2, 250px); }
-  @media (max-width: 589px) { grid-template-columns: repeat(1, 250px); }
-}
