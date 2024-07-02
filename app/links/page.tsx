@@ -2,7 +2,7 @@
 
 import './styles.scss';
 import LinkBox from '../components/link-box';
-import React, { useRef, useEffect } from 'react';
+//import React, { useRef, useEffect } from 'react';
 
 export default function Page() {
     //const canvasRef = useRef(null);

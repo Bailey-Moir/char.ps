@@ -34,9 +34,13 @@ body, #main {
     );
 }
 #icon {
-    width: 20vw;
+    width: calc(3*128px);
     height: auto;
     border: none;
+    image-rendering: pixelated;
+    
+    @media (max-width: 999px) { width: calc(2*128px); }
+    @media (max-width: 499px) { width: calc(1*128px); }
 }
 
 #title {
