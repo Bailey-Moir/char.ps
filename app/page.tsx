@@ -6,7 +6,6 @@ export default function Page() {
     const canvasRef = useRef(null);
 
     useEffect(() => {
-        if (!canvasRef.current) return;
         const ctx = canvasRef.current.getContext('2d');
         // Load image
         const image = new Image();
