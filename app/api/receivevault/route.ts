@@ -13,7 +13,8 @@ export async function POST(req: Request) {
     //}
 
     // Parse body JSON
-    return new NextResponse(`Body: ${req.body}\nHeaders: ${req.headers}\nBlob: ${await req.blob()}`);
+    console.log(req);
+    return new NextResponse(req.body);
     try {
         req.body
     } catch {
