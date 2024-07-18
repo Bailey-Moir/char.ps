@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     //}
 
     // Parse body JSON
-    return new NextResponse(req.body);
+    return new NextResponse(req);
     try {
         req.body
     } catch {
