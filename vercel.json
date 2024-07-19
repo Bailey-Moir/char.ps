@@ -1,9 +1,12 @@
 {
-    "redirects": [
+    "rewrites": [
         {
-            "source": "/:path*",
-            "destination": "https://publish.obsidian.md/atomic/:path*",
-            "permanent": true
+            "source": "/vault/",
+            "destination": "https://publish.obsidian.md/serve?url=char.ps/vault"
+        },
+        {
+            "source": "/vault/:path*",
+            "destination": "https://publish.obsidian.md/serve?url=char.ps/vault/:path*"
         }
     ]
 }
