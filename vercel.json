@@ -2,15 +2,21 @@
     "rewrites": [
         {
             "source": "/",
-            "destination": "https://publish.obsidian.md/serve?url=vlt.char.ps/"
-        },
-        {
-            "source": "/:path*",
-            "destination": "https://publish.obsidian.md/serve?url=vlt.char.ps/:path*",
+            "destination": "https://publish.obsidian.md/serve?url=www.vlt.char.ps/",
             "has": [
                 {
                     "type": "host",
-                    "value": "vlt.char.ps"
+                    "value": "www.vlt.char.ps"
+                }
+            ]
+        },
+        {
+            "source": "/:path*",
+            "destination": "https://publish.obsidian.md/serve?url=www.vlt.char.ps/:path*",
+            "has": [
+                {
+                    "type": "host",
+                    "value": "www.vlt.char.ps"
                 }
             ]
         }
