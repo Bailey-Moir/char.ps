@@ -1,8 +1,8 @@
 {
     "rewrites": [
         {
-            "source": "/:path*",
-            "destination": "https://publish.obsidian.md/serve?url=vlt.char.ps/:path*",
+            "source": "/",
+            "destination": "https://publish.obsidian.md/serve?url=vlt.char.ps",
             "has": [
                 {
                     "type": "host",
@@ -11,8 +11,8 @@
             ]
         },
         {
-            "source": "/",
-            "destination": "https://publish.obsidian.md/serve?url=vlt.char.ps",
+            "source": "/:path*",
+            "destination": "https://publish.obsidian.md/serve?url=vlt.char.ps/:path*",
             "has": [
                 {
                     "type": "host",
