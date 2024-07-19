@@ -2,13 +2,7 @@
     "rewrites": [
         {
             "source": "/",
-            "destination": "https://publish.obsidian.md/serve?url=vlt.char.ps",
-            "has": [
-                {
-                    "type": "host",
-                    "value": "vlt.char.ps"
-                }
-            ]
+            "destination": "https://publish.obsidian.md/serve?url=vlt.char.ps/",
         },
         {
             "source": "/:path*",
