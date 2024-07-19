@@ -1,12 +1,24 @@
 {
     "rewrites": [
         {
-            "source": "/vault/",
-            "destination": "https://publish.obsidian.md/serve?url=char.ps/vault"
+            "source": "/:path*",
+            "destination": "https://publish.obsidian.md/serve?url=vlt.char.ps/:path*",
+            "has": [
+                {
+                    "type": "host",
+                    "value": "vlt.char.ps"
+                }
+            ]
         },
         {
-            "source": "/vault/:path*",
-            "destination": "https://publish.obsidian.md/serve?url=char.ps/vault/:path*"
+            "source": "/",
+            "destination": "https://publish.obsidian.md/serve?url=vlt.char.ps",
+            "has": [
+                {
+                    "type": "host",
+                    "value": "vlt.char.ps"
+                }
+            ]
         }
     ]
 }
