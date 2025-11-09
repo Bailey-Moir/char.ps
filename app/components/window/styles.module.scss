@@ -1,0 +1,106 @@
+$primary-0: #0041E1;
+$primary-1: #5791F3;
+$secondary-0: #E55026;
+$secondary-1: #E41506;
+
+.container {
+  position: absolute;
+  top: 10vh;
+  left: 10vw;
+  // width: 80vw;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-width: 0 2px 2px 2px;
+    border-color: $primary-1;
+    color: black;
+    height: calc(80vh - 50px);
+    padding: 5px;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    height: 50px;
+    background: linear-gradient($primary-0, $primary-1);
+    font-family: 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    color: white;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+      background: radial-gradient(ellipse at center,
+          rgba(255, 255, 255, 0.6) 0%,
+          rgba(255, 255, 255, 0.4) 50%,
+          transparent 100%);
+      pointer-events: none;
+    }
+
+    .title {
+      padding-left: 10px;
+      font-size: 1.5em;
+    }
+
+    >.controls {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding-right: 10px;
+
+      >button {
+        background: linear-gradient($primary-1, $primary-0);
+        width: 1.5em;
+        height: 1.5em;
+        font-size: 1.3em;
+        border: solid white 2px;
+        border-radius: 5px;
+        font-family: 'Courier New', monospace;
+
+        &.minimize {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          div {
+            width: calc(0.8em - 1px);
+            height: 0;
+            border: solid white 2px;
+          }
+        }
+
+        &.maximize {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          div {
+            width: calc(0.8em - 1px);
+            height: calc(0.7em - 1px);
+            border: solid white 2px;
+            border-radius: 5px;
+          }
+        }
+
+        &.close {
+          background: linear-gradient($secondary-0, $secondary-1);
+        }
+      }
+    }
+  }
+}
