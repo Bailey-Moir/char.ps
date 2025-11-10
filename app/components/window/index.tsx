@@ -1,19 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './styles.module.scss';
+import { icon } from '@fortawesome/fontawesome-svg-core';
 
 const BorderDirections = ['east', 'south-east', 'south', 'south-west', 'west'] as const;
 type BorderDirection = typeof BorderDirections[number];
 
-export default function Window(props: { children: React.ReactNode, title: string, width?: number, height?: number, x?: number, y?: number, moveable?: boolean, scaleable?: boolean }) {
+export default function Window(props: { children: React.ReactNode, title: string, icon?: string, width?: number, height?: number, x?: number, y?: number, moveable?: boolean, scaleable?: boolean }) {
     const [width, setWidth] = useState<number>(0);
     const [height, setHeight] = useState<number>(0);
     const [x, setX] = useState<number>(0);
     const [y, setY] = useState<number>(0);
-    const windowRef = useRef<Window | null>(null);
+    const [deleted, setDeleted] = useState<boolean>(false);
+    const [maxData, setMaxData] = useState<{
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+    } | null>(null);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
-        windowRef.current = window;
 
         setWidth((props.width ?? 80) * (window.innerWidth / 100));
         setHeight((props.height ?? 80) * (window.innerHeight / 100));
@@ -22,10 +28,7 @@ export default function Window(props: { children: React.ReactNode, title: string
     }, [props.width, props.height, props.x, props.y]);
 
     function startDragging(header: HTMLDivElement) {
-        if (!windowRef.current) return;
-
-        windowRef.current.document.body.style.userSelect = 'none';
-
+        document.body.style.userSelect = 'none';
         header.style.cursor = 'grabbing';
 
         let initialized = false;
@@ -38,6 +41,13 @@ export default function Window(props: { children: React.ReactNode, title: string
             if (!initialized) {
                 originX = ev.clientX;
                 originY = ev.clientY;
+                if (maxData !== null) {
+                    setWidth(maxData.width);
+                    setHeight(maxData.height);
+                    initialX = originX - maxData.width/2;
+                    initialY = originY - 25;
+                    setMaxData(null);
+                }
                 initialized = true;
                 return;
             }
@@ -47,20 +57,19 @@ export default function Window(props: { children: React.ReactNode, title: string
         };
 
         const handleMouseUp = () => {
-            windowRef.current?.removeEventListener('mousemove', handleMouseMove);
-            windowRef.current?.removeEventListener('mouseup', handleMouseUp);
-            windowRef.current!.document.body.style.userSelect = '';
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+            window.document.body.style.userSelect = '';
             header.style.cursor = 'grab';
         };
 
-        windowRef.current.addEventListener('mousemove', handleMouseMove);
-        windowRef.current.addEventListener('mouseup', handleMouseUp);
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', handleMouseUp);
     }
 
     function startScaling(direction: BorderDirection, border: HTMLDivElement) {
-        if (!windowRef.current) return;
-
-        windowRef.current.document.body.style.userSelect = 'none';
+        setMaxData(null);
+        window.document.body.style.userSelect = 'none';
 
         let initialized = false;
         let initialX = x;
@@ -89,31 +98,56 @@ export default function Window(props: { children: React.ReactNode, title: string
         };
 
         const handleMouseUp = () => {
-            windowRef.current?.removeEventListener('mousemove', handleMouseMove);
-            windowRef.current?.removeEventListener('mouseup', handleMouseUp);
-            windowRef.current!.document.body.style.userSelect = '';
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+            window.document.body.style.userSelect = '';
         };
 
-        windowRef.current.addEventListener('mousemove', handleMouseMove);
-        windowRef.current.addEventListener('mouseup', handleMouseUp);
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', handleMouseUp);
     }
 
-    if (windowRef === null) return null; // don't render until window is ready
+    function maximize() {
+        if (maxData == null) {
+            setMaxData({ x, y, width, height });
+            setWidth(window.innerWidth);
+            setHeight(window.innerHeight);
+            setX(0);
+            setY(0);
+        } else {
+            setWidth(maxData.width);
+            setHeight(maxData.height);
+            setX(maxData.x);
+            setY(maxData.y);
+            setMaxData(null);
+        }
+    }
 
-    return (
+    if (width === 0) return null; // don't render until window is ready
+
+    return deleted ? (<></>) : (
         <div
             style={{ width: `${width}px`, height: `${height}px`, left: `${x}px`, top: `${y}px` }}
             className={styles.root}
         >
             <div style={(props.moveable ?? true) ? { cursor: 'grab' } : {}}
-                onMouseDown={ev => (props.moveable ?? true) && startDragging(ev.currentTarget)}>
+                onMouseDown={ev => ev.button == 0 && (props.moveable ?? true) && startDragging(ev.currentTarget)}>
                 <div></div> {/* Gloss */}
                 <div className={styles.header}>
-                    <p className={styles.title}>{props.title}</p>
-                    <div className={styles.controls}>
+                    <div className={styles.title}>
+                        {props.icon !== undefined && <img src={props.icon} />}
+                        <p>
+                            {props.title}
+                        </p>
+                    </div>
+                    <div className={styles.controls} style={props.icon === undefined ? { marginLeft: '10px' } : {}}>
                         <button className={styles.minimize}><div></div></button>
-                        <button className={styles.maximize}><div></div></button>
-                        <button className={styles.close}>✕</button>
+                        {(props.moveable ?? true) && (props.scaleable ?? true) &&
+                            <button className={styles.maximize}
+                                onClick={ev => ev.button == 0 && maximize()}><div></div></button>
+                        }
+                        <button onMouseUp={ev => ev.button == 0 && setDeleted(true)}
+                            className={styles.close}>✕</button>
                     </div>
                 </div>
             </div>
@@ -121,13 +155,13 @@ export default function Window(props: { children: React.ReactNode, title: string
                 {BorderDirections.map(direction => (
                     (props.scaleable ?? true) ?
                         <div style={{ cursor: `${direction.split('-').map(x => x.charAt(0)).join('')}-resize` }}
-                            onMouseDown={ev => startScaling(direction, ev.currentTarget)}
+                            onMouseDown={ev => ev.button == 0 && startScaling(direction, ev.currentTarget)}
                             className={styles[`${direction}-border`]}></div>
-                    :
+                        :
                         <div className={styles[`${direction}-border`]}></div>
                 ))},
                 <div className={styles.content}>{props.children}</div>
             </div>
-        </div>
+        </div >
     );
 }
