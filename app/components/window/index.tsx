@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 const BorderDirections = ['east', 'south-east', 'south', 'south-west', 'west'] as const;
 type BorderDirection = typeof BorderDirections[number];
 
-export default function Window(props: { children: React.ReactNode, title: string, width?: number, height?: number, x?: number, y?: number }) {
+export default function Window(props: { children: React.ReactNode, title: string, width?: number, height?: number, x?: number, y?: number, moveable?: boolean, scaleable?: boolean }) {
     const [width, setWidth] = useState<number>(0);
     const [height, setHeight] = useState<number>(0);
     const [x, setX] = useState<number>(0);
@@ -105,8 +105,8 @@ export default function Window(props: { children: React.ReactNode, title: string
             style={{ width: `${width}px`, height: `${height}px`, left: `${x}px`, top: `${y}px` }}
             className={styles.root}
         >
-            <div style={{ cursor: 'grab' }}
-                onMouseDown={ev => startDragging(ev.currentTarget)}>
+            <div style={(props.moveable ?? true) ? { cursor: 'grab' } : {}}
+                onMouseDown={ev => (props.moveable ?? true) && startDragging(ev.currentTarget)}>
                 <div></div> {/* Gloss */}
                 <div className={styles.header}>
                     <p className={styles.title}>{props.title}</p>
@@ -119,9 +119,12 @@ export default function Window(props: { children: React.ReactNode, title: string
             </div>
             <div className={styles.container}>
                 {BorderDirections.map(direction => (
-                    <div style={{ cursor: `${direction.split('-').map(x => x.charAt(0)).join('')}-resize` }}
-                        onMouseDown={ev => startScaling(direction, ev.currentTarget)}
-                        className={styles[`${direction}-border`]}></div>
+                    (props.scaleable ?? true) ?
+                        <div style={{ cursor: `${direction.split('-').map(x => x.charAt(0)).join('')}-resize` }}
+                            onMouseDown={ev => startScaling(direction, ev.currentTarget)}
+                            className={styles[`${direction}-border`]}></div>
+                    :
+                        <div className={styles[`${direction}-border`]}></div>
                 ))},
                 <div className={styles.content}>{props.children}</div>
             </div>
